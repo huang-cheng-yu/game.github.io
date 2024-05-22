@@ -380,29 +380,42 @@
 			}
 		
 	 });
-	  canvas.addEventListener('click', function(event) {
-                const rect = canvas.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
+	 let startX, startY, endX, endY;
 
-                // 将 Canvas 分成上下左右四个区域
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
+document.addEventListener('mousedown', function(event) {
+    const rect = canvas.getBoundingClientRect();
+    startX = event.clientX - rect.left;
+    startY = event.clientY - rect.top;
+});
 
-                if (x > centerX && y > centerY / 2 && y < centerY * 1.5) {
-                    // 右侧区域
-                    move('ArrowRight');
-                } else if (x < centerX && y > centerY / 2 && y < centerY * 1.5) {
-                    // 左侧区域
-                    move('ArrowLeft');
-                } else if (y < centerY && x > centerX / 2 && x < centerX * 1.5) {
-                    // 上侧区域
-                    move('ArrowUp');
-                } else if (y > centerY && x > centerX / 2 && x < centerX * 1.5) {
-                    // 下侧区域
-                    move('ArrowDown');
-                }
-            });
+document.addEventListener('mouseup', function(event) {
+    const rect = canvas.getBoundingClientRect();
+    endX = event.clientX - rect.left;
+    endY = event.clientY - rect.top;
+
+    // 计算滑动距离
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+
+    // 判断滑动方向
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+            // 向右滑动
+            move('ArrowRight');
+        } else {
+            // 向左滑动
+            move('ArrowLeft');
+        }
+    } else {
+        if (deltaY > 0) {
+            // 向下滑动
+            move('ArrowDown');
+        } else {
+            // 向上滑动
+            move('ArrowUp');
+        }
+    }
+});
 	 
   </script>
 </body>
