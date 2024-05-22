@@ -380,7 +380,29 @@
 			}
 		
 	 });
-	 
+	  canvas.addEventListener('click', function(event) {
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                // 将 Canvas 分成上下左右四个区域
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                if (x > centerX && y > centerY / 2 && y < centerY * 1.5) {
+                    // 右侧区域
+                    move('ArrowRight');
+                } else if (x < centerX && y > centerY / 2 && y < centerY * 1.5) {
+                    // 左侧区域
+                    move('ArrowLeft');
+                } else if (y < centerY && x > centerX / 2 && x < centerX * 1.5) {
+                    // 上侧区域
+                    move('ArrowUp');
+                } else if (y > centerY && x > centerX / 2 && x < centerX * 1.5) {
+                    // 下侧区域
+                    move('ArrowDown');
+                }
+            });
 	 
   </script>
 </body>
